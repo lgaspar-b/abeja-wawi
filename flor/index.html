@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flores Amarillas para Wawi</title>
+    <meta property="og:title" content="Flores Amarillas para Wawi">
+    <meta property="og:description" content="Rita, en septiembre florecen las flores amarillas y con ellas pienso en ti.">
+    <meta property="og:image" content="https://lgaspar-b.github.io/abeja-wawi/imagen1.jpg">
+    <meta property="og:url" content="https://lgaspar-b.github.io/abeja-wawi/flor/">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        * { padding: 0; margin: 0; box-sizing: border-box; }
+
+        html, body {
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            background-image: linear-gradient(to top, #451a03, #0d0208);
+            min-height: 100vh;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            font-family: 'Pacifico', cursive;
+            animation: fadeIn 0.8s ease-in;
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Botón volver */
+        .back-btn {
+            position: fixed;
+            top: 16px; left: 16px;
+            color: white;
+            font-size: 20px;
+            text-decoration: none;
+            z-index: 100;
+            background: rgba(0,0,0,0.35);
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+        .back-btn:hover { background: rgba(0,0,0,0.6); }
+
+        /* Mensaje flotante */
+        .floating-msg {
+            position: fixed;
+            bottom: 80vmin;
+            left: 0;
+            right: 0;
+            width: 100%;
+            padding: 0 24px;
+            color: #fde68a;
+            font-family: 'Pacifico', cursive;
+            font-size: 2rem;
+            text-shadow: 0 0 18px rgba(255, 200, 0, 0.9), 0 0 40px rgba(255,180,0,0.5);
+            pointer-events: none;
+            z-index: 50;
+            text-align: center;
+            opacity: 0;
+            animation: msg-pulse 10s ease-in-out infinite 4s;
+        }
+        @keyframes msg-pulse {
+            0%, 100% { opacity: 0; transform: scale(0.9); }
+            35%, 65%  { opacity: 1; transform: scale(1); }
+        }
+        @media (max-width: 768px) {
+            .floating-msg { font-size: 1.2rem; bottom: calc(25vh + 78vmin); }
+        }
+
+        /* Flor */
+        .sunflower {
+            position: absolute;
+            bottom: 2vmin;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: transform 0.25s ease-out;
+            z-index: 3;
+        }
+        .flower_wrapper {
+            position: relative;
+            animation: moving-flower-1 4s ease-in-out infinite;
+            transform-origin: bottom center;
+        }
+        @keyframes moving-flower-1 {
+            0%, 100% { transform: rotate(0deg); }
+            25%       { transform: rotate(1.5deg); }
+            75%       { transform: rotate(-1.5deg); }
+        }
+        .flower_stem {
+            width: 2vmin; height: 65vmin;
+            background-image: linear-gradient(to left top, #82ff86 20%, #144425, #104e1c);
+            border-radius: 4vmin;
+        }
+        .flower_center {
+            position: absolute;
+            top: 0; left: 50%;
+            transform: translateX(-50%) rotate(-10deg);
+            width: 20vmin; height: 20vmin;
+            border-radius: 50%;
+            background: radial-gradient(circle, #000, #ff5e00);
+            animation: open-flower-middle 2s 0.4s backwards;
+            box-shadow: 0 0 22px rgba(255,140,0,0.7), 0 0 45px rgba(255,100,0,0.35);
+            z-index: 5;
+        }
+        .flower_petal {
+            position: absolute;
+            left: 50%; bottom: 55vmin;
+            transform: translateX(-50%);
+            width: 7vmin; height: 20vmin;
+            background: radial-gradient(circle, #ff5e00, #ffbb00);
+            clip-path: ellipse(50% 50% at 50% 50%);
+            transform-origin: center bottom;
+            animation: open-flower 2s 1s backwards;
+            z-index: 3;
+        }
+        .flower_petal-1  { transform: translateX(-50%) rotate(0deg); }
+        .flower_petal-2  { transform: translateX(-50%) rotate(-30deg); }
+        .flower_petal-3  { transform: translateX(-50%) rotate(-60deg); }
+        .flower_petal-4  { transform: translateX(-50%) rotate(-90deg); }
+        .flower_petal-5  { transform: translateX(-50%) rotate(-120deg); }
+        .flower_petal-6  { transform: translateX(-50%) rotate(-150deg); }
+        .flower_petal-7  { transform: translateX(-50%) rotate(30deg); }
+        .flower_petal-8  { transform: translateX(-50%) rotate(60deg); }
+        .flower_petal-9  { transform: translateX(-50%) rotate(90deg); }
+        .flower_petal-10 { transform: translateX(-50%) rotate(120deg); }
+        .flower_petal-11 { transform: translateX(-50%) rotate(150deg); }
+        .flower_petal-12 { transform: translateX(-50%) rotate(180deg); }
+
+        .flower_leaf {
+            position: absolute;
+            width: 7vmin; height: 17vmin;
+            background: radial-gradient(circle, #82ff86, #104e1c);
+            border-radius: 10vmin 2vmin 10vmin 2vmin;
+            transform-origin: center bottom;
+        }
+        .flower_leaf-1 { bottom: 18vmin; left: 60%; transform: translateX(-45%) rotate(80deg); }
+        .flower_leaf-2 { bottom: 23vmin; left: 55%; transform: translateX(-55%) rotate(-80deg); }
+
+        .flower_light {
+            position: absolute;
+            bottom: 70vmin;
+            width: 1vmin; height: 1vmin;
+            background-color: rgb(255, 251, 0);
+            border-radius: 50%;
+            filter: blur(0.2vmin);
+            animation: light-ans 4s linear infinite backwards;
+        }
+        .flower_light-1 { left: -2vmin; animation-delay: 1s; }
+        .flower_light-2 { left:  3vmin; animation-delay: 0.5s; }
+        .flower_light-3 { left: -6vmin; animation-delay: 0.3s; }
+        .flower_light-4 { left:  6vmin; animation-delay: 0.9s; }
+        .flower_light-5 { left: -1vmin; animation-delay: 1.5s; }
+        .flower_light-6 { left: -4vmin; animation-delay: 3s; }
+        .flower_light-7 { left:  3vmin; animation-delay: 2s; }
+        .flower_light-8 { left: -6vmin; animation-delay: 3.5s; }
+
+        /* Luces de fondo */
+        .light {
+            position: absolute;
+            bottom: 0;
+            width: 1vmin; height: 1vmin;
+            background-color: rgb(255, 251, 0);
+            border-radius: 50%;
+            filter: blur(0.2vmin);
+            animation: light-ans-background 7s linear infinite backwards;
+        }
+        .light-1  { left: 10vmin;  animation-delay: 1s; }
+        .light-2  { left: 20vmin;  animation-delay: 0.5s; }
+        .light-3  { left: 60vmin;  animation-delay: 0.3s; }
+        .light-4  { left: 80vmin;  animation-delay: 0.9s; }
+        .light-5  { left: 45vmin;  animation-delay: 1.5s; }
+        .light-6  { left: 10vmin;  animation-delay: 3s; }
+        .light-7  { left: 88vw;  animation-delay: 2s; }
+        .light-8  { left: 62vw;  animation-delay: 3.5s; }
+        .light-9  { left: 70vw;  animation-delay: 2s; }
+        .light-10 { left: 82vw;  animation-delay: 3.5s; }
+        .light-11 { left: 75vw;  animation-delay: 3s; }
+        .light-12 { left: 78vw;  animation-delay: 0.5s; }
+
+        /* Animaciones flor */
+        @keyframes open-flower        { 0% { transform: translateX(-50%) rotate(0); } }
+        @keyframes open-flower-middle { 0% { opacity: 0; transform: translateX(-50%) scale(0); } }
+        @keyframes light-ans {
+            0%   { opacity: 0; transform: translateY(0); }
+            25%  { opacity: 1; transform: translateY(-5vmin) translateX(-2vmin); }
+            50%  { opacity: 1; transform: translateY(-15vmin) translateX(2vmin); }
+            75%  { transform: translateY(-20vmin) translateX(-2vmin); }
+            100% { transform: translateY(-30vmin); opacity: 0; }
+        }
+        @keyframes light-ans-background {
+            0%   { opacity: 0; transform: translateY(0); }
+            25%  { opacity: 1; transform: translateY(-10vmin) translateX(-2vmin); }
+            50%  { opacity: 1; transform: translateY(-20vmin) translateX(2vmin); }
+            60%  { transform: translateY(-30vmin) translateX(-2vmin); }
+            70%  { transform: translateY(-40vmin) translateX(2vmin); }
+            80%  { transform: translateY(-50vmin) translateX(-2vmin); }
+            100% { transform: translateY(-60vmin); opacity: 0; }
+        }
+
+        /* Fotos estilo Polaroid */
+        .floating-images {
+            position: absolute;
+            width: 100%; height: 100%;
+            top: 0; left: 0;
+            pointer-events: none;
+        }
+        .floating-image {
+            --rot: 0deg;
+            width: 300px; height: 300px;
+            z-index: 5;
+            object-fit: cover;
+            position: absolute;
+            opacity: 0;
+            border: 11px solid #fff;
+            border-bottom: 36px solid #fff;
+            border-radius: 2px;
+            box-shadow: 0 8px 28px rgba(0,0,0,0.55);
+            animation: polaroid-float 6s infinite ease-in-out, polaroid-appear 12s infinite;
+        }
+        .image-1 { top: 4%;     left: 3%;   animation-delay: 0s;  --rot: -4deg; }
+        .image-2 { top: 4%;     right: 3%;  animation-delay: 3s;  --rot: 3deg; }
+        .image-3 { bottom: 2%;  left: 2%;   animation-delay: 6s;  --rot: 5deg; }
+        .image-4 { bottom: 2%;  right: 2%;  animation-delay: 9s;  --rot: -3deg; }
+
+        @keyframes polaroid-float {
+            0%   { transform: translateY(0)     scale(1)    rotate(var(--rot)); }
+            50%  { transform: translateY(-18px)  scale(1.04) rotate(var(--rot)); }
+            100% { transform: translateY(0)     scale(1)    rotate(var(--rot)); }
+        }
+        @keyframes polaroid-appear {
+            0%   { opacity: 0; transform: scale(0.82) rotate(var(--rot)); }
+            25%  { opacity: 1; transform: scale(1)    rotate(var(--rot)); }
+            50%  { opacity: 0; transform: scale(0.82) rotate(var(--rot)); }
+            75%  { opacity: 1; transform: scale(1)    rotate(var(--rot)); }
+            100% { opacity: 0; transform: scale(0.82) rotate(var(--rot)); }
+        }
+
+        /* Plantas decorativas laterales */
+        .side-plant {
+            position: absolute;
+            bottom: 2vmin;
+            z-index: 3;
+            animation: moving-flower-1 4s ease-in-out infinite;
+            transform-origin: bottom center;
+        }
+        .side-plant-left  { left: calc(50% - 26vmin); animation-delay: 1.3s; }
+        .side-plant-right { left: calc(50% + 24vmin); animation-delay: 2.6s; }
+
+        .side-stem {
+            width: 1.5vmin;
+            height: 40vmin;
+            background: linear-gradient(to left top, #82ff86 20%, #144425, #104e1c);
+            border-radius: 3vmin;
+            margin: auto;
+        }
+        .side-center {
+            position: absolute;
+            top: 0; left: 50%;
+            transform: translateX(-50%) rotate(-8deg);
+            width: 12vmin; height: 12vmin;
+            border-radius: 50%;
+            background: radial-gradient(circle, #1a0800, #ff6600);
+            z-index: 2;
+            animation: open-flower-middle 2s 1s backwards;
+        }
+        .side-petal {
+            position: absolute;
+            left: 50%; bottom: 34vmin;
+            width: 4vmin; height: 12vmin;
+            background: radial-gradient(circle, #ff7700, #ffd000);
+            clip-path: ellipse(50% 50% at 50% 50%);
+            transform-origin: center bottom;
+            animation: open-flower 2s 1.4s backwards;
+        }
+        .side-petal-1 { transform: translateX(-50%) rotate(0deg); }
+        .side-petal-2 { transform: translateX(-50%) rotate(-45deg); }
+        .side-petal-3 { transform: translateX(-50%) rotate(-90deg); }
+        .side-petal-4 { transform: translateX(-50%) rotate(-135deg); }
+        .side-petal-5 { transform: translateX(-50%) rotate(45deg); }
+        .side-petal-6 { transform: translateX(-50%) rotate(90deg); }
+        .side-petal-7 { transform: translateX(-50%) rotate(135deg); }
+        .side-petal-8 { transform: translateX(-50%) rotate(180deg); }
+
+        .side-leaf {
+            position: absolute;
+            width: 5vmin; height: 11vmin;
+            background: radial-gradient(circle, #82ff86, #104e1c);
+            border-radius: 8vmin 1.5vmin 8vmin 1.5vmin;
+            transform-origin: center bottom;
+        }
+        .side-leaf-1 { bottom: 12vmin; left: 60%; transform: translateX(-63%) rotate(80deg); }
+        .side-leaf-2 { bottom: 15vmin; left: 55%; transform: translateX(-77%) rotate(-80deg); }
+
+        @media (max-width: 768px) {
+            .side-plant { bottom: calc(25vh + 2vmin); }
+        }
+
+        /* Abeja */
+        .bee-container {
+            position: absolute;
+            left: 50%; bottom: 58vmin;
+            z-index: 10;
+            animation: bee-wander 9s ease-in-out infinite;
+        }
+        .image-center {
+            display: block;
+            width: 130px; height: 130px;
+            object-fit: cover;
+            border-radius: 50%;
+            box-shadow: 0 0 16px rgba(255,220,0,0.75), 0 3px 10px rgba(0,0,0,0.4);
+            position: relative;
+            z-index: 2;
+        }
+        .bee-wing {
+            position: absolute;
+            width: 70px; height: 38px;
+            background: rgba(210,240,255,0.42);
+            border-radius: 50%;
+            border: 1.5px solid rgba(255,255,255,0.65);
+            top: 18%; z-index: 1;
+        }
+        .bee-wing-left  { left: -60px;  transform-origin: right center; animation: wing-left  0.22s ease-in-out infinite alternate; }
+        .bee-wing-right { right: -60px; transform-origin: left center;  animation: wing-right 0.22s ease-in-out infinite alternate; }
+        .bee-antenna {
+            position: absolute;
+            width: 2.5px; height: 24px;
+            background: #1c0a00;
+            border-radius: 3px;
+            top: -22px; z-index: 3;
+        }
+        .bee-antenna::after {
+            content: '';
+            position: absolute;
+            width: 8px; height: 8px;
+            background: #f59e0b;
+            border-radius: 50%;
+            top: -8px; left: -3px;
+            box-shadow: 0 0 5px rgba(245,158,11,0.9);
+        }
+        .bee-antenna-left  { left: 30%;  transform: rotate(-22deg); transform-origin: bottom center; }
+        .bee-antenna-right { right: 30%; transform: rotate(22deg);  transform-origin: bottom center; }
+        .bee-stinger {
+            position: absolute;
+            bottom: -16px; left: 50%;
+            transform: translateX(-50%);
+            width: 0; height: 0;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 16px solid #78350f;
+            z-index: 3;
+        }
+
+        @keyframes wing-left  { from { transform: rotate(-18deg) scaleY(1); } to { transform: rotate(-38deg) scaleY(0.7); } }
+        @keyframes wing-right { from { transform: rotate(18deg)  scaleY(1); } to { transform: rotate(38deg)  scaleY(0.7); } }
+        @keyframes bee-wander {
+            0%   { transform: translateX(-50%) translateY(0) rotate(0deg); }
+            15%  { transform: translateX(calc(-50% - 25vmin)) translateY(10vmin) rotate(-15deg); }
+            30%  { transform: translateX(calc(-50% - 8vmin))  translateY(-5vmin) rotate(8deg); }
+            50%  { transform: translateX(-50%) translateY(0) rotate(0deg); }
+            65%  { transform: translateX(calc(-50% + 25vmin)) translateY(10vmin) rotate(15deg); }
+            82%  { transform: translateX(calc(-50% + 5vmin))  translateY(-5vmin) rotate(-8deg); }
+            100% { transform: translateX(-50%) translateY(0) rotate(0deg); }
+        }
+        @keyframes bee-wander-mobile {
+            0%   { transform: translateX(-50%) translateY(0) rotate(0deg); }
+            16%  { transform: translateX(calc(-50% - 25vmin)) translateY(23vmin) rotate(-15deg); }
+            33%  { transform: translateX(-50%) translateY(0) rotate(5deg); }
+            50%  { transform: translateX(-50%) translateY(-4vmin) rotate(0deg); }
+            66%  { transform: translateX(calc(-50% + 25vmin)) translateY(23vmin) rotate(15deg); }
+            83%  { transform: translateX(-50%) translateY(0) rotate(-5deg); }
+            100% { transform: translateX(-50%) translateY(0) rotate(0deg); }
+        }
+
+        /* Suelo */
+        .ground {
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            height: 4vmin;
+            background: linear-gradient(to top, #0d0300, #2a1000 55%, #1a5500);
+            z-index: 4;
+        }
+        .ground::before {
+            content: '';
+            position: absolute;
+            bottom: 100%;
+            left: 0; right: 0;
+            height: 5vmin;
+            background: linear-gradient(to top, #1a6000, #3aaa18);
+            clip-path: polygon(
+                0% 100%, 1.5% 20%, 3% 85%, 5% 5%, 7% 75%, 9% 30%,
+                11% 95%, 13% 10%, 15% 80%, 17% 0%, 19% 70%, 21% 40%,
+                23% 100%, 25% 15%, 27% 85%, 29% 5%, 31% 75%, 33% 35%,
+                35% 95%, 37% 20%, 39% 80%, 41% 0%, 43% 65%, 45% 45%,
+                47% 100%, 49% 10%, 51% 80%, 53% 5%, 55% 70%, 57% 30%,
+                59% 90%, 61% 15%, 63% 85%, 65% 0%, 67% 75%, 69% 40%,
+                71% 95%, 73% 20%, 75% 80%, 77% 5%, 79% 70%, 81% 30%,
+                83% 100%, 85% 10%, 87% 80%, 89% 0%, 91% 70%, 93% 35%,
+                95% 90%, 97% 15%, 99% 80%, 100% 100%
+            );
+        }
+        .ground::after {
+            content: '';
+            position: absolute;
+            bottom: 100%;
+            left: 0; right: 0;
+            height: 3vmin;
+            background: linear-gradient(to top, #2a8800 0%, transparent 100%);
+            opacity: 0.4;
+        }
+
+        /* Flores ambientales zona inferior */
+        .ambi-flower {
+            position: fixed;
+            pointer-events: none;
+            z-index: 3;
+        }
+        @keyframes ambi-pulse {
+            0%, 100% { opacity: 0; transform: scale(0.7) rotate(-10deg); }
+            40%, 60% { opacity: 1; transform: scale(1.05) rotate(10deg); }
+        }
+
+        /* Rastro de la abeja */
+        .bee-trail {
+            position: fixed;
+            width: 7px; height: 7px;
+            border-radius: 50%;
+            background: #fbbf24;
+            pointer-events: none;
+            z-index: 9;
+            animation: trail-fade 0.9s ease-out forwards;
+        }
+        @keyframes trail-fade {
+            to { opacity: 0; transform: scale(0); }
+        }
+
+        /* Flores al tocar */
+        .click-flower {
+            position: fixed;
+            pointer-events: none;
+            font-size: 22px;
+            z-index: 9999;
+            animation: flower-rise 1.2s ease-out forwards;
+        }
+        @keyframes flower-rise {
+            to {
+                transform: translate(var(--dx), var(--dy)) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .floating-image  { width: 130px; height: 130px; border-width: 7px; border-bottom-width: 24px; }
+            .image-1 { top: 3%; left: 2%; }
+            .image-2 { top: 3%; right: 2%; }
+            .image-3 { bottom: 3%; top: auto; left: 2%; }
+            .image-4 { bottom: 3%; top: auto; right: 2%; }
+            .ground          { bottom: 25vh; }
+            .sunflower       { bottom: calc(25vh + 4vmin); }
+            .bee-container   { bottom: calc(25vh + 59vmin); animation-name: bee-wander-mobile; }
+            .image-center    { width: 75px; height: 75px; }
+            .bee-wing        { width: 38px; height: 22px; }
+            .bee-wing-left   { left: -32px; }
+            .bee-wing-right  { right: -32px; }
+            .bee-antenna     { height: 16px; width: 2px; top: -15px; }
+            .bee-antenna::after { width: 6px; height: 6px; top: -6px; left: -2px; }
+            .bee-stinger     { border-left-width: 4px; border-right-width: 4px; border-top-width: 11px; bottom: -12px; }
+        }
+    </style>
+</head>
+<body onclick="PlayAudio()">
+    <audio id="musica1" autoplay loop>
+        <source src="../Flores Amarillas2.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="ground"></div>
+
+    <a href="../" class="back-btn" onclick="fadeOut(event, '../')">&#8592;</a>
+
+    <div class="floating-msg">Para ti, Wawi</div>
+
+    <div class="side-plant side-plant-left">
+        <div class="side-stem"></div>
+        <div class="side-center"></div>
+        <div class="side-petal side-petal-1"></div>
+        <div class="side-petal side-petal-2"></div>
+        <div class="side-petal side-petal-3"></div>
+        <div class="side-petal side-petal-4"></div>
+        <div class="side-petal side-petal-5"></div>
+        <div class="side-petal side-petal-6"></div>
+        <div class="side-petal side-petal-7"></div>
+        <div class="side-petal side-petal-8"></div>
+        <div class="side-leaf side-leaf-1"></div>
+        <div class="side-leaf side-leaf-2"></div>
+    </div>
+    <div class="side-plant side-plant-right">
+        <div class="side-stem"></div>
+        <div class="side-center"></div>
+        <div class="side-petal side-petal-1"></div>
+        <div class="side-petal side-petal-2"></div>
+        <div class="side-petal side-petal-3"></div>
+        <div class="side-petal side-petal-4"></div>
+        <div class="side-petal side-petal-5"></div>
+        <div class="side-petal side-petal-6"></div>
+        <div class="side-petal side-petal-7"></div>
+        <div class="side-petal side-petal-8"></div>
+        <div class="side-leaf side-leaf-1"></div>
+        <div class="side-leaf side-leaf-2"></div>
+    </div>
+
+    <div class="sunflower" id="sunflower">
+        <div class="flower_wrapper">
+            <div class="flower_stem"></div>
+            <div class="flower_center"></div>
+            <div class="flower_petal flower_petal-1"></div>
+            <div class="flower_petal flower_petal-2"></div>
+            <div class="flower_petal flower_petal-3"></div>
+            <div class="flower_petal flower_petal-4"></div>
+            <div class="flower_petal flower_petal-5"></div>
+            <div class="flower_petal flower_petal-6"></div>
+            <div class="flower_petal flower_petal-7"></div>
+            <div class="flower_petal flower_petal-8"></div>
+            <div class="flower_petal flower_petal-9"></div>
+            <div class="flower_petal flower_petal-10"></div>
+            <div class="flower_petal flower_petal-11"></div>
+            <div class="flower_petal flower_petal-12"></div>
+            <div class="flower_leaf flower_leaf-1"></div>
+            <div class="flower_leaf flower_leaf-2"></div>
+            <div class="flower_light flower_light-1"></div>
+            <div class="flower_light flower_light-2"></div>
+            <div class="flower_light flower_light-3"></div>
+            <div class="flower_light flower_light-4"></div>
+            <div class="flower_light flower_light-5"></div>
+            <div class="flower_light flower_light-6"></div>
+            <div class="flower_light flower_light-7"></div>
+            <div class="flower_light flower_light-8"></div>
+        </div>
+    </div>
+
+    <div class="light light-1"></div>
+    <div class="light light-2"></div>
+    <div class="light light-3"></div>
+    <div class="light light-4"></div>
+    <div class="light light-5"></div>
+    <div class="light light-6"></div>
+    <div class="light light-7"></div>
+    <div class="light light-8"></div>
+    <div class="light light-9"></div>
+    <div class="light light-10"></div>
+    <div class="light light-11"></div>
+    <div class="light light-12"></div>
+
+    <div class="bee-container" id="bee">
+        <div class="bee-antenna bee-antenna-left"></div>
+        <div class="bee-antenna bee-antenna-right"></div>
+        <div class="bee-wing bee-wing-left"></div>
+        <div class="bee-wing bee-wing-right"></div>
+        <img src="../imagen2.jpg" class="image-center" alt="Foto central">
+        <div class="bee-stinger"></div>
+    </div>
+
+    <div class="floating-images">
+        <img src="../imagen1.jpg"  class="floating-image image-1" alt="Imagen 1">
+        <img src="../imagen3.jpg"  class="floating-image image-2" alt="Imagen 3">
+        <img src="../imagen5.jpeg" class="floating-image image-3" alt="Imagen 5">
+        <img src="../imagen6.jpeg" class="floating-image image-4" alt="Imagen 6">
+    </div>
+
+    <script>
+        const audio = document.getElementById("musica1");
+
+        function PlayAudio() {
+            if (audio) audio.play().catch(() => {});
+        }
+
+        // iOS Safari bloquea autoplay — intentar en el primer toque
+        document.addEventListener('touchstart', function unlockAudio() {
+            if (audio) audio.play().catch(() => {});
+            document.removeEventListener('touchstart', unlockAudio);
+        }, { passive: true, once: true });
+
+        // Fade out al volver
+        function fadeOut(e, url) {
+            e.preventDefault();
+            document.body.style.transition = 'opacity 0.6s';
+            document.body.style.opacity = '0';
+            setTimeout(() => { window.location.href = url; }, 600);
+        }
+
+        // Parallax con mouse (web)
+        const sunflower = document.getElementById('sunflower');
+        document.addEventListener('mousemove', function(e) {
+            const x = (e.clientX / window.innerWidth  - 0.5) * 18;
+            const y = (e.clientY / window.innerHeight - 0.5) * 10;
+            sunflower.style.transform = `translateX(calc(-50% + ${x}px)) translateY(${y}px)`;
+        });
+
+        // Parallax con touch (mobile)
+        document.addEventListener('touchmove', function(e) {
+            const t = e.touches[0];
+            const x = (t.clientX / window.innerWidth  - 0.5) * 12;
+            const y = (t.clientY / window.innerHeight - 0.5) * 8;
+            sunflower.style.transform = `translateX(calc(-50% + ${x}px)) translateY(${y}px)`;
+        }, { passive: true });
+
+        // Rastro de la abeja
+        const bee = document.getElementById('bee');
+        setInterval(() => {
+            const rect = bee.getBoundingClientRect();
+            const dot = document.createElement('div');
+            dot.className = 'bee-trail';
+            dot.style.left = (rect.left + rect.width  / 2) + 'px';
+            dot.style.top  = (rect.top  + rect.height / 2) + 'px';
+            document.body.appendChild(dot);
+            setTimeout(() => dot.remove(), 900);
+        }, 120);
+
+        // Flores al tocar
+        const symbols = ['✿', '❀', '✾', '⚘', '❁'];
+        function spawnFlowers(x, y) {
+            for (let i = 0; i < 5; i++) {
+                const f = document.createElement('div');
+                f.className = 'click-flower';
+                f.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+                f.style.left = x + 'px';
+                f.style.top  = y + 'px';
+                f.style.color = ['#fbbf24','#fde68a','#f59e0b'][Math.floor(Math.random()*3)];
+                f.style.setProperty('--dx', (Math.random() - 0.5) * 100 + 'px');
+                f.style.setProperty('--dy', -(Math.random() * 80 + 30) + 'px');
+                document.body.appendChild(f);
+                setTimeout(() => f.remove(), 1200);
+            }
+        }
+        document.addEventListener('click', e => {
+            if (!e.target.closest('.back-btn')) spawnFlowers(e.clientX, e.clientY);
+        });
+        document.addEventListener('touchstart', e => {
+            const t = e.touches[0];
+            spawnFlowers(t.clientX, t.clientY);
+        }, { passive: true });
+
+        // Flores ambientales zona inferior
+        const ambiSyms = ['✿', '❀', '✾', '❁', '⚘'];
+        const ambiCols = ['rgba(245,158,11,VAL)', 'rgba(251,191,36,VAL)', 'rgba(252,211,77,VAL)', 'rgba(217,119,6,VAL)'];
+        const isMobile = window.innerWidth <= 768;
+        const bottomMax = isMobile ? 24 : 18;
+        for (let i = 0; i < (isMobile ? 14 : 10); i++) {
+            const f = document.createElement('div');
+            f.className = 'ambi-flower';
+            const opacity = (0.25 + Math.random() * 0.35).toFixed(2);
+            const col = ambiCols[Math.floor(Math.random() * ambiCols.length)].replace('VAL', opacity);
+            const dur = (2.5 + Math.random() * 3).toFixed(1);
+            const delay = (Math.random() * 6).toFixed(1);
+            const size = 13 + Math.random() * 13;
+            f.style.cssText = `font-size:${size}px;color:${col};left:${3+Math.random()*94}%;bottom:${1+Math.random()*bottomMax}%;animation:ambi-pulse ${dur}s ease-in-out ${delay}s infinite;`;
+            f.textContent = ambiSyms[Math.floor(Math.random() * ambiSyms.length)];
+            document.body.appendChild(f);
+        }
+    </script>
+</body>
+</html>

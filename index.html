@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:title" content="Flores Amarillas para Wawi">
+    <meta property="og:description" content="Rita, en septiembre florecen las flores amarillas y con ellas pienso en ti.">
+    <meta property="og:image" content="https://lgaspar-b.github.io/abeja-wawi/imagen1.jpg">
+    <meta property="og:url" content="https://lgaspar-b.github.io/abeja-wawi/">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600&display=swap" rel="stylesheet">
+    <title>Flores para Wawi</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            animation: fadeIn 0.8s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+
+        .back {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: #fffbeb;
+            animation: backdiv 3500ms infinite;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2.5vh;
+            padding: 20px;
+            text-align: center;
+        }
+
+        @keyframes backdiv {
+            50% { background: #fde68a; }
+        }
+
+        /* Título decorativo */
+        .titulo {
+            font-family: 'Pacifico', cursive;
+            font-size: 2.2rem;
+            color: #92400e;
+            text-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+            z-index: 2;
+            letter-spacing: 1px;
+        }
+
+        /* Mensaje */
+        .bday {
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            font-size: 15px;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 600;
+            color: #78350f;
+            padding: 14px 18px;
+            background-color: #fde68a;
+            border-left: 4px solid #f59e0b;
+            border-right: 4px solid #f59e0b;
+            border-radius: 4px;
+            width: 90%;
+            max-width: 520px;
+            min-height: 54px;
+            z-index: 2;
+        }
+
+        .bday::after {
+            content: '|';
+            animation: blink 0.7s step-end infinite;
+        }
+        .bday.done::after { content: ''; }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50%       { opacity: 0; }
+        }
+
+        /* Snoopy */
+        .snoopy {
+            width: 300px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 5px solid #f59e0b;
+            box-shadow: 0 0 35px rgba(251, 191, 36, 0.65), 0 6px 20px rgba(0,0,0,0.12);
+            flex-shrink: 0;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* Botones */
+        .btns {
+            display: flex;
+            gap: 16px;
+            z-index: 2;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .btn-si {
+            background-color: #16a34a;
+            padding: 13px 36px;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 17px;
+            cursor: pointer;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 600;
+            box-shadow: 0 4px 14px rgba(22, 163, 74, 0.45);
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+        .btn-si:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(22, 163, 74, 0.55);
+        }
+        .btn-no {
+            background-color: #dc2626;
+            padding: 13px 36px;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 17px;
+            cursor: pointer;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 600;
+            box-shadow: 0 4px 14px rgba(220, 38, 38, 0.35);
+            user-select: none;
+        }
+        @media (max-width: 768px) {
+            .btn-si, .btn-no { font-size: 15px; padding: 11px 28px; }
+        }
+
+        /* Pétalos y símbolos flotantes */
+        .petal {
+            position: fixed;
+            top: -20px;
+            border-radius: 50% 0 50% 0;
+            pointer-events: none;
+            z-index: 1;
+            animation: petal-fall linear forwards;
+        }
+        @keyframes petal-fall {
+            to {
+                top: 110vh;
+                transform: rotate(720deg) translateX(30px);
+                opacity: 0;
+            }
+        }
+
+        .float-symbol {
+            position: fixed;
+            bottom: -40px;
+            font-size: 22px;
+            pointer-events: none;
+            z-index: 1;
+            animation: symbol-rise linear forwards;
+        }
+        @keyframes symbol-rise {
+            to {
+                bottom: 110vh;
+                transform: rotate(360deg) translateX(15px);
+                opacity: 0;
+            }
+        }
+
+        /* Partículas al tocar */
+        .click-particle {
+            position: fixed;
+            pointer-events: none;
+            border-radius: 50%;
+            background: #f59e0b;
+            z-index: 9999;
+            animation: particle-rise 1s ease-out forwards;
+        }
+        @keyframes particle-rise {
+            to {
+                transform: translate(var(--dx), var(--dy));
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .back    { gap: 2vh; padding: 14px 16px; }
+            .titulo  { font-size: 1.6rem; }
+            .bday    { font-size: 13px; padding: 11px 14px; width: 92%; }
+            .snoopy  { width: 190px; height: 190px; }
+            button   { font-size: 15px; padding: 11px 28px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="back">
+        <div class="titulo">Wawi ✿</div>
+        <div class="bday" id="msg"></div>
+        <video class="snoopy" autoplay muted loop playsinline>
+            <source src="snoopy.mp4" type="video/mp4">
+        </video>
+        <div class="btns">
+            <button class="btn-si" onclick="goToFlor()">Sí quiero ✿</button>
+            <button class="btn-no" id="btnNo">No quiero</button>
+        </div>
+    </div>
+
+    <script>
+        // Typewriter
+        const fullText = "En septiembre florecen las flores amarillas y con ellas pienso en ti. Te mando esta flor virtual como símbolo de lo especial que eres para mí.";
+        const msgEl = document.getElementById('msg');
+        let idx = 0;
+        function type() {
+            if (idx < fullText.length) {
+                msgEl.textContent += fullText[idx++];
+                setTimeout(type, 38);
+            } else {
+                msgEl.classList.add('done');
+            }
+        }
+        type();
+
+        // Pétalos cayendo — pantalla completa
+        const petalColors = ['#fbbf24','#f59e0b','#fde68a','#fcd34d'];
+        function createPetal() {
+            const p = document.createElement('div');
+            p.className = 'petal';
+            p.style.left = Math.random() * 100 + 'vw';
+            const dur = Math.random() * 3 + 3.5;
+            p.style.animationDuration = dur + 's';
+            p.style.opacity = Math.random() * 0.5 + 0.35;
+            const s = Math.random() * 10 + 8;
+            p.style.width  = s + 'px';
+            p.style.height = (s * 1.6) + 'px';
+            p.style.background = petalColors[Math.floor(Math.random() * petalColors.length)];
+            document.body.appendChild(p);
+            setTimeout(() => p.remove(), dur * 1000 + 500);
+        }
+        setInterval(createPetal, 250);
+
+        // Símbolos flotando desde abajo en los costados
+        const symbols = ['✿', '❀', '✾', '⚘', '❁'];
+        const symColors = ['#f59e0b','#fbbf24','#d97706','#fcd34d'];
+        function createSymbol() {
+            const el = document.createElement('div');
+            el.className = 'float-symbol';
+            // costados: 0-20% y 80-100%
+            el.style.left = Math.random() < 0.5
+                ? (Math.random() * 20) + 'vw'
+                : (80 + Math.random() * 20) + 'vw';
+            el.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+            el.style.color = symColors[Math.floor(Math.random() * symColors.length)];
+            const dur = Math.random() * 4 + 5;
+            el.style.animationDuration = dur + 's';
+            el.style.opacity = Math.random() * 0.5 + 0.4;
+            document.body.appendChild(el);
+            setTimeout(() => el.remove(), dur * 1000 + 500);
+        }
+        setInterval(createSymbol, 600);
+
+        // Partículas al tocar
+        function spawnParticles(x, y) {
+            for (let j = 0; j < 6; j++) {
+                const par = document.createElement('div');
+                par.className = 'click-particle';
+                const size = Math.random() * 8 + 6;
+                par.style.width  = size + 'px';
+                par.style.height = size + 'px';
+                par.style.left = x + 'px';
+                par.style.top  = y + 'px';
+                par.style.setProperty('--dx', (Math.random() - 0.5) * 80 + 'px');
+                par.style.setProperty('--dy', -(Math.random() * 70 + 20) + 'px');
+                document.body.appendChild(par);
+                setTimeout(() => par.remove(), 1000);
+            }
+        }
+        document.addEventListener('click', e => {
+            if (!e.target.closest('button')) spawnParticles(e.clientX, e.clientY);
+        });
+        document.addEventListener('touchstart', e => {
+            const t = e.touches[0];
+            spawnParticles(t.clientX, t.clientY);
+        }, { passive: true });
+
+        // Botón "No quiero" — imposible de clickear
+        const btnNo = document.getElementById('btnNo');
+        let escaped = false;
+
+        function escapeBtn() {
+            if (!escaped) {
+                escaped = true;
+                const r = btnNo.getBoundingClientRect();
+                btnNo.style.position = 'fixed';
+                btnNo.style.left = r.left + 'px';
+                btnNo.style.top  = r.top  + 'px';
+                btnNo.style.margin = '0';
+            }
+            const margin = 60;
+            const w = btnNo.offsetWidth;
+            const h = btnNo.offsetHeight;
+            const x = margin + Math.random() * (window.innerWidth  - w - margin * 2);
+            const y = margin + Math.random() * (window.innerHeight - h - margin * 2);
+            btnNo.style.left = x + 'px';
+            btnNo.style.top  = y + 'px';
+        }
+
+        btnNo.addEventListener('mouseenter', escapeBtn);
+        btnNo.addEventListener('touchstart', e => {
+            e.preventDefault();
+            escapeBtn();
+        }, { passive: false });
+
+        // Por si acaso logra clickearlo de alguna forma, no hace nada
+        btnNo.addEventListener('click', e => e.preventDefault());
+
+        // Restablecer visibilidad si el navegador restaura esta página desde caché
+        window.addEventListener('pageshow', function() {
+            const back = document.querySelector('.back');
+            back.style.transition = '';
+            back.style.opacity   = '1';
+        });
+
+        // Forzar reproducción del video en iOS Safari
+        const vid = document.querySelector('.snoopy');
+        if (vid) {
+            vid.play().catch(() => {});
+            document.addEventListener('touchstart', function tryPlay() {
+                vid.play().catch(() => {});
+                document.removeEventListener('touchstart', tryPlay);
+            }, { passive: true });
+        }
+
+        // Fade out al navegar
+        function goToFlor() {
+            document.querySelector('.back').style.transition = 'opacity 0.7s';
+            document.querySelector('.back').style.opacity = '0';
+            setTimeout(() => { window.location.href = 'flor/'; }, 700);
+        }
+    </script>
+</body>
+</html>
